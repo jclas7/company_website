@@ -12,7 +12,7 @@ const scrollToTop = () => {
 
 function Footer() {
   return (
-    <footer className="bg-blue-200 text-black-100">
+    <footer className="bg-gradient-to-br from-[#cbddf8] to-[#ffffff] text-black-100">
       <div className="continer mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>

@@ -1,6 +1,7 @@
 import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi";
+import { AiFillHome } from "react-icons/ai";
 
 const menuItems = [
   { path: "/", label: "홈" },
@@ -30,10 +31,10 @@ function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-orange-200 text-gray-800 p-4 shadow-lg z-50">
+    <nav className="fixed top-0 left-0 w-full bg-gradient-to-br from-[#f8b37e] to-[#ffcb9a] text-gray-800 p-4 shadow-lg z-50">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-xl font-bold lg:ml-12 lg:mr-8">
-          <a href="/">JC Company</a>
+          {isOpen ? <AiFillHome /> : <a href="/"> JC Company</a>}
         </h1>
         <div className="hidden lg:flex flex-1 justify-center">
           <ul className="flex gap-8 text-lg">
