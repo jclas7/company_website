@@ -16,6 +16,12 @@ import Board from "./pages/board/Board";
 import Services from "./pages/services/Services";
 
 import AdminLogin from "./pages/admin/AdminLogin";
+import AdminContacts from "./pages/admin/AdminContacts";
+import AdminCreatePost from "./pages/admin/AdminCreatePost";
+import AdminEditPost from "./pages/admin/AdminEditPost";
+import AdminPosts from "./pages/admin/AdminPosts";
+import AdminNavBar from "./components/adminNavBar/AdminNavBar";
+
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -24,6 +30,7 @@ function AuthRedirectRoute() {
 
   useEffect(() => {
     const verifyToken = async () => {
+      console.log("+++++++++++++++++++++++++++++12");
       try {
         const response = await axios.post(
           "http://localhost:3000/api/auth/verify-token",
@@ -42,8 +49,43 @@ function AuthRedirectRoute() {
   if (isAuthenticated === null) {
     return null;
   }
-
+  console.log("+++++++++++++++++++++++++++++ 2");
   return isAuthenticated ? <Navigate to="/admin/posts" replace /> : <Outlet />;
+}
+
+function ProtectRoute() {
+  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const verifyToken = async () => {
+      console.log("+++++++++++++++++++++++++++++ 2");
+      try {
+        const response = await axios.post(
+          "http://localhost:3000/api/auth/verify-token",
+          {},
+          { withCredentials: true }
+        );
+        setIsAuthenticated(response.data.isValid);
+        setUser(response.data.user);
+      } catch (error) {
+        console.log("토큰 인증 실패:", error);
+        setIsAuthenticated(false);
+        setUser(null);
+      }
+    };
+    verifyToken();
+  }, []);
+
+  if (isAuthenticated === null) {
+    return null;
+  }
+
+  return isAuthenticated ? (
+    <Outlet context={{ user }} />
+  ) : (
+    <Navigate to="/admin" replace />
+  );
 }
 
 function Layout() {
@@ -52,6 +94,15 @@ function Layout() {
       <Navbar />
       <Outlet />
       <Footer />
+    </>
+  );
+}
+
+function AdminLayout() {
+  return (
+    <>
+      <AdminNavBar />
+      <Outlet />
     </>
   );
 }
@@ -73,6 +124,31 @@ const router = createBrowserRouter([
     path: "/admin",
     element: <AuthRedirectRoute />,
     children: [{ index: true, element: <AdminLogin /> }],
+  },
+  // {
+  //   path: "/admin",
+  //   element: <AdminLayout />,
+  //   children: [
+  //     { path: "posts", element: <AdminPosts /> },
+  //     { path: "create-post", element: <AdminCreatePost /> },
+  //     { path: "edit-post/:id", element: <AdminEditPost /> },
+  //     { path: "contact", element: <AdminContacts /> },
+  //   ],
+  // },
+  {
+    path: "/admin",
+    element: <ProtectRoute />,
+    children: [
+      {
+        element: <AdminLayout />,
+        children: [
+          { path: "posts", element: <AdminPosts /> },
+          { path: "create-post", element: <AdminCreatePost /> },
+          { path: "edit-post/:id", element: <AdminEditPost /> },
+          { path: "contact", element: <AdminContacts /> },
+        ],
+      },
+    ],
   },
 ]);
 
