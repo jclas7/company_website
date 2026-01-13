@@ -53,7 +53,7 @@ function Board(props) {
       </h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border rounded-lg">
-          <thread className="bg-gray-50">
+          <thead className="bg-gray-50">
             <tr>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-500 uppercase tracking-wider w-[8%]">
                 번호
@@ -71,7 +71,7 @@ function Board(props) {
                 조회수
               </th>
             </tr>
-          </thread>
+          </thead>
           <tbody className="divide-y divide-gray-200">
             {currentPosts.map((post) => (
               <tr key={post._id} className="hover:bg-gray-50 cursor-pointer">

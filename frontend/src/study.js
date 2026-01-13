@@ -26,3 +26,27 @@ console.log(person);
 
 console.log("name" in person);
 console.log("grade" in person);
+
+let person2 = {
+  name: "이정환",
+  age: 11,
+  hobby: "테니스",
+};
+
+let { age, hobby } = person2;
+
+console.log(name, age, hobby);
+
+const fun = ({ age, hobby }) => {
+  console.log(age);
+};
+
+fun(person2);
+
+let arr1 = [1, 2, 3];
+
+function funcA(p1, p2) {
+  console.log(p1, p2);
+}
+
+funcA(...arr1);

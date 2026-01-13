@@ -49,7 +49,7 @@ function Contact(props) {
               height="450"
               allowfullscreen=""
               loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
+              referrerPolicy="no-referrer-when-downgrade"
               className="w-full h-[400px] md:h-[600px] lg:h-[600px]"
             ></iframe>
           </div>
