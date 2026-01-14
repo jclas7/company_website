@@ -8,10 +8,16 @@ const PORT = 3000;
 
 const userRoutes = require("./routes/user");
 const contactRoutees = require("./routes/contact");
+const postRoutes = require("./routes/post");
+const uploadRoutes = require("./routes/upload");
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "http://192.168.55.46:5173",
+      "http://192.168.45.187:5173",
+    ],
     credentials: true,
   })
 );
@@ -22,6 +28,8 @@ app.use(cookieParse());
 
 app.use("/api/auth", userRoutes);
 app.use("/api/contact", contactRoutees);
+app.use("/api/post", postRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.get("/", (req, res) => {
   res.send("헬로 월드~~");
